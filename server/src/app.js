@@ -8,50 +8,95 @@
 //   - Error handling
 // ============================================
 
+// import express from 'express';
+// import cors from 'cors';
+
+// // Import all routes (bundled in one index file)
+// import routes from './routes/index.js';
+
+// // Import the global error handler
+// import { errorHandler, notFoundHandler } from './middleware/error.middleware.js';
+
+// // ---- Create the Express App ----
+// const app = express();
+
+// // ============================================
+// // MIDDLEWARE (runs on every request, in order)
+// // ============================================
+
+// // 1. CORS: Allow our frontend (React) to talk to this backend
+// //    Without this, browsers will block requests from localhost:5173 → localhost:5000
+// app.use(cors({ origin: process.env.CLIENT_URL || 'http://localhost:5173' }));
+
+// // 2. Body Parser: Convert incoming JSON requests to JavaScript objects
+// //    10mb limit to handle large resume text and interview data
+// app.use(express.json({ limit: '10mb' }));
+
+// // ============================================
+// // ROUTES
+// // ============================================
+
+// // Mount all API routes under /api
+// // /api/auth      → authentication routes
+// // /api/interview → interview routes (start, answer, feedback)
+// // /api/resume    → resume upload and parsing routes
+// // /api/history   → interview history routes
+// app.use('/api', routes);
+
+// // ============================================
+// // ERROR HANDLING (must be AFTER routes)
+// // ============================================
+
+// // Handle 404 - Route not found
+// app.use(notFoundHandler);
+
+// // Handle all other errors (500, validation errors, etc.)
+// app.use(errorHandler);
+
+// // Export the app (used in server.js)
+// export default app;
+
 import express from 'express';
 import cors from 'cors';
-
-// Import all routes (bundled in one index file)
 import routes from './routes/index.js';
-
-// Import the global error handler
 import { errorHandler, notFoundHandler } from './middleware/error.middleware.js';
 
-// ---- Create the Express App ----
 const app = express();
 
-// ============================================
-// MIDDLEWARE (runs on every request, in order)
-// ============================================
+// Trust proxy (important for Render)
+app.set('trust proxy', 1);
 
-// 1. CORS: Allow our frontend (React) to talk to this backend
-//    Without this, browsers will block requests from localhost:5173 → localhost:5000
-app.use(cors({ origin: process.env.CLIENT_URL || 'http://localhost:5173' }));
+// CORS configuration
+const allowedOrigins = [
+  process.env.CLIENT_URL,
+  'http://localhost:5173'
+];
 
-// 2. Body Parser: Convert incoming JSON requests to JavaScript objects
-//    10mb limit to handle large resume text and interview data
+app.use(cors({
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('CORS not allowed'));
+    }
+  },
+  credentials: true
+}));
+
+// Body parsers
 app.use(express.json({ limit: '10mb' }));
+app.use(express.urlencoded({ extended: true }));
 
-// ============================================
-// ROUTES
-// ============================================
+// Health check route
+app.get('/', (req, res) => {
+  res.send('API is running 🚀');
+});
 
-// Mount all API routes under /api
-// /api/auth      → authentication routes
-// /api/interview → interview routes (start, answer, feedback)
-// /api/resume    → resume upload and parsing routes
-// /api/history   → interview history routes
+// API routes
 app.use('/api', routes);
 
-// ============================================
-// ERROR HANDLING (must be AFTER routes)
-// ============================================
-
-// Handle 404 - Route not found
+// Error handling
 app.use(notFoundHandler);
-
-// Handle all other errors (500, validation errors, etc.)
 app.use(errorHandler);
 
-// Export the app (used in server.js)
 export default app;
