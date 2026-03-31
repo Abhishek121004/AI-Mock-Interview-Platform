@@ -9,7 +9,7 @@
 import axios from 'axios';
 
 const API = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || 'https://ai-mock-interview-platform-sdmg.onrender.com/api',
+  baseURL: import.meta.env.VITE_API_URL || 'https://ai-mock-interview-platform-sdmg.onrender.com/api' || 'https://aipoweredmockinterviewplatform.netlify.app/api',
 });
 
 // Attach JWT token to every request
