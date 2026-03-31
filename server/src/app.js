@@ -68,16 +68,19 @@ app.set('trust proxy', 1);
 
 // CORS configuration
 const allowedOrigins = [
-  process.env.CLIENT_URL,
-  'http://localhost:5173'
+  'http://localhost:5173',
+  'https://aipoweredmockinterviewplatform.netlify.app'
 ];
 
 app.use(cors({
   origin: function (origin, callback) {
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
+    // allow requests with no origin (like Postman)
+    if (!origin) return callback(null, true);
+
+    if (allowedOrigins.includes(origin)) {
+      return callback(null, true);
     } else {
-      callback(new Error('CORS not allowed'));
+      return callback(new Error('CORS not allowed'));
     }
   },
   credentials: true
