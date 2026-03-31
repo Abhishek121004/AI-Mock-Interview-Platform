@@ -51,3 +51,13 @@ An AI-powered mock interview platform that helps users practice technical and be
 
 ## 📂 Project Structure
 
+AI-Mock-Interview-Platform/
+│── client/ # Frontend
+│── server/ # Backend
+│── routes/ # API routes
+│── models/ # Database schemas
+│── controllers/ # Logic
+│── utils/ # Helper functions
+│── .env # Environment variables
+│── package.json
+
