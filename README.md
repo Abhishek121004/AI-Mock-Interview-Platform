@@ -50,6 +50,9 @@ An AI-powered mock interview platform that helps users practice technical and be
 ---
 
 ```
+
+🚀 Project Structure
+
 AI-Mock-Interview-Platform/
 │
 ├── client/                 # Frontend (React)
