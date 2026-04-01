@@ -49,7 +49,19 @@ An AI-powered mock interview platform that helps users practice technical and be
 
 ---
 
-## 📂 Project Structure
-
-AI-Mock-Interview-Platform/ │ ├── client/ # Frontend (React) ├── server/ # Backend (Node.js + Express) │ ├── routes/ # API routes │ ├── controllers/ # Business logic │ ├── models/ # Database schemas │ ├── utils/ # Helper functions │ └── config/ # Database & app configuration (optional) │ ├── .env # Environment variables ├── .gitignore # Ignored files ├── package.json # Project dependencies ├── README.md # Project documentation
-
+```
+AI-Mock-Interview-Platform/
+│
+├── client/                 # Frontend (React)
+├── server/                 # Backend (Node.js + Express)
+│   ├── routes/             # API routes
+│   ├── controllers/        # Business logic
+│   ├── models/             # Database schemas
+│   ├── utils/              # Helper functions
+│   └── config/             # Database & app configuration (optional)
+│
+├── .env                    # Environment variables
+├── .gitignore              # Ignored files
+├── package.json            # Project dependencies
+├── README.md               # Project documentation
+```
