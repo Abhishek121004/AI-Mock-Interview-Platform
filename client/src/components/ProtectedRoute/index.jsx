@@ -26,7 +26,7 @@ function ProtectedRoute({ children }) {
   }
 
   // Redirect to login if not authenticated
-  if (!user) return <Navigate to="/login" />;
+  if (!user) return <Navigate to="/login" replace/>;
 
   return <div className="protected-shell">{children}</div>;
 }
